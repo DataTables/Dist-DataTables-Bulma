@@ -1,0 +1,15 @@
+{
+    "js": [
+        "js/dataTables.bulma.js",
+        "js/dataTables.bulma.min.js"
+    ],
+    "css": [
+        "css/dataTables.bulma.css",
+        "css/dataTables.bulma.min.css"
+    ],
+    "types": [
+        "types/dataTables.bulma.d.ts"
+    ],
+    "src-repo": "http://github.com/DataTables/DataTablesSrc",
+    "last-tag": "1.10.24"
+}
