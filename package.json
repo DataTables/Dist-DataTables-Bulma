@@ -3,6 +3,7 @@
     "description": "DataTables for jQuery with styling for [Bulma](https://bulma.io/)",
     "main": "js/dataTables.bulma.js",
     "style": "css/dataTables.bulma.css",
+    "types": "./types/dataTables.bulma.d.ts",
     "version": "1.10.24",
     "files": [
         "css/**/*.css",
