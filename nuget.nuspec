@@ -10,8 +10,7 @@
         <license type="expression">MIT</license>
         <tags>Bulma  Datatables jQuery table</tags>
         <dependencies>
-            <dependency id="datatables.net" version="1.10.25"/>
-            <dependency id="" version=""/>
+            <dependency id="datatables.net" version="1.11.3"/>
         </dependencies>
         <contentFiles>
             <files include="**/*" buildAction="Content"/>
