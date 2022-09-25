@@ -1,3 +1,4 @@
+
 /*! DataTables Bulma integration
  * ©2020 SpryMedia Ltd - datatables.net/license
  */
@@ -5,7 +6,7 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery', 'datatables.net'], function ( $ ) {
+		define( [''], function ( $ ) {
 			return factory( $, window, document );
 		} );
 	}
@@ -13,15 +14,15 @@
 		// CommonJS
 		module.exports = function (root, $) {
 			if ( ! root ) {
+				// CommonJS environments without a window global must pass a
+				// root. This will give an error otherwise
 				root = window;
 			}
 
-			if ( ! $ || ! $.fn.dataTable ) {
-				// Require DataTables, which attaches to jQuery, including
-				// jQuery if needed and have a $ property so we can access the
-				// jQuery object that is used
-				$ = require('datatables.net')(root, $).$;
+			if ( ! $.fn.dataTable ) {
+				require('')(root, $);
 			}
+
 
 			return factory( $, root, root.document );
 		};
@@ -33,6 +34,7 @@
 }(function( $, window, document, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
+
 
 
 /* Set the defaults for DataTables initialisation */
@@ -70,7 +72,7 @@ DataTable.ext.renderer.pageButton.bulma = function ( settings, host, idx, button
 		var i, ien, node, button, tag, disabled;
 		var clickHandler = function ( e ) {
 			e.preventDefault();
-			if ( ! $('a', e.currentTarget).prop('disabled') && api.page() != e.data.action ) {
+			if ( ! $(e.currentTarget.firstChild).attr('disabled') && api.page() != e.data.action ) {
 				api.page( e.data.action ).draw( 'page' );
 			}
 		};
@@ -193,7 +195,6 @@ $(document).on( 'init.dt', function (e, ctx) {
 	// $( 'div.dataTables_filter.ui.input', api.table().container() ).removeClass('input').addClass('form');
 	// $( 'div.dataTables_filter input', api.table().container() ).wrap( '<span class="ui input" />' );
 } );
-
 
 
 return DataTable;
