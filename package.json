@@ -2,12 +2,14 @@
     "name": "datatables.net-bm",
     "description": "DataTables for jQuery with styling for [Bulma](https://bulma.io/)",
     "main": "js/dataTables.bulma.js",
+    "module": "js/dataTables.bulma.mjs",
     "style": "css/dataTables.bulma.css",
     "types": "./types/dataTables.bulma.d.ts",
     "version": "1.12.1",
     "files": [
         "css/**/*.css",
         "js/**/*.js",
+        "js/**/*.mjs",
         "types/**/*.d.ts",
         "images/*"
     ],
