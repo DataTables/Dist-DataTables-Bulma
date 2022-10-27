@@ -4,7 +4,7 @@
     "main": "js/dataTables.bulma.js",
     "module": "js/dataTables.bulma.mjs",
     "style": "css/dataTables.bulma.css",
-    "types": "./types/dataTables.bulma.d.ts",
+    "types": "./types/types.d.ts",
     "version": "1.12.1",
     "files": [
         "css/**/*.css",
