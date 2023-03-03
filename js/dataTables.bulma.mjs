@@ -6,7 +6,6 @@ import $ from 'jquery';
 import DataTable from 'datatables.net';
 
 
-
 /* Set the defaults for DataTables initialisation */
 $.extend( true, DataTable.defaults, {
 	dom:
