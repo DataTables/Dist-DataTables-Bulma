@@ -154,7 +154,7 @@ DataTable.ext.renderer.pageButton.bulma = function ( settings, host, idx, button
 								'role': 'link',
 								'aria-current': btnClass === 'is-current' ? 'page' : null,
 								'data-dt-idx': button,
-								'tabindex': settings.iTabIndex,
+								'tabindex': disabled ? -1 : settings.iTabIndex,
 								'class': 'pagination-link ' + btnClass,
 								'disabled': disabled
 							} )
