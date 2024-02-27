@@ -11,91 +11,147 @@ let $ = jQuery;
 
 /* Set the defaults for DataTables initialisation */
 $.extend( true, DataTable.defaults, {
+	dom:
+		"<'columns is-gapless is-multiline'" +
+			"<'column is-half'l>" +
+			"<'column is-half'f>" +
+			"<'column is-full'tr>" +
+			"<'column is-half'i>" +
+			"<'column is-half'p>" +
+		">",
 	renderer: 'bulma'
 } );
 
 
 /* Default class modification */
-$.extend( true, DataTable.ext.classes, {
-	container: "dt-container dt-bulma",
-	search: {
-		input: "input"
-	},
-	length: {
-		input: "custom-select custom-select-sm form-control form-control-sm"
-	},
-	processing: {
-		container: "dt-processing card"
-	}
+$.extend( DataTable.ext.classes, {
+	sWrapper:      "dataTables_wrapper dt-bulma",
+	sFilterInput:  "input",
+	sLengthSelect: "custom-select custom-select-sm form-control form-control-sm",
+	sProcessing:   "dataTables_processing card"
 } );
 
 
-DataTable.ext.renderer.pagingButton.bulma = function (settings, buttonType, content, active, disabled) {
-	var btnClasses = ['pagination-link'];
+/* Bulma paging button renderer */
+DataTable.ext.renderer.pageButton.bulma = function ( settings, host, idx, buttons, page, pages ) {
+	var api     = new DataTable.Api( settings );
+	var classes = settings.oClasses;
+	var lang    = settings.oLanguage.oPaginate;
+	var aria = settings.oLanguage.oAria.paginate || {};
+	var btnDisplay, btnClass;
 
-	if (active) {
-		btnClasses.push('is-current');
-	}
+	var attach = function( container, buttons ) {
+		var i, ien, node, button, tag, disabled;
+		var clickHandler = function ( e ) {
+			e.preventDefault();
+			if ( ! $(e.currentTarget.firstChild).attr('disabled') && api.page() != e.data.action ) {
+				api.page( e.data.action ).draw( 'page' );
+			}
+		};
 
-	var li = $('<li>');
-	var a = $('<a>', {
-		'href': disabled ? null : '#',
-		'class': btnClasses.join(' '),
-		'disabled': disabled
-	})
-		.html(content)
-		.appendTo(li);
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			button = buttons[i];
 
-	return {
-		display: li,
-		clicker: a
+			if ( Array.isArray( button ) ) {
+				attach( container, button );
+			}
+			else {
+				btnDisplay = '';
+				btnClass = '';
+				tag = 'a';
+				disabled = false;
+
+				switch ( button ) {
+					case 'ellipsis':
+						btnDisplay = '&#x2026;';
+						btnClass = 'pagination-link';
+						disabled = true;
+						tag = 'span';
+						break;
+
+					case 'first':
+						btnDisplay = lang.sFirst;
+						btnClass = button;
+						disabled = page <= 0;
+						break;
+
+					case 'previous':
+						btnDisplay = lang.sPrevious;
+						btnClass = button;
+						disabled = page <= 0;
+						break;
+
+					case 'next':
+						btnDisplay = lang.sNext;
+						btnClass = button;
+						disabled = page >= pages - 1;
+						break;
+
+					case 'last':
+						btnDisplay = lang.sLast;
+						btnClass = button;
+						disabled = page >= pages - 1;
+						break;
+
+					default:
+						btnDisplay = button + 1;
+						btnClass = page === button ?
+							'is-current' : '';
+						break;
+				}
+
+				if ( btnDisplay ) {
+					node = $('<li>', {
+							'id': idx === 0 && typeof button === 'string' ?
+								settings.sTableId +'_'+ button :
+								null
+						} )
+						.append( $('<' + tag + '>', {
+								'href': disabled ? null : '#',
+								'aria-controls': settings.sTableId,
+								'aria-disabled': disabled ? 'true' : null,
+								'aria-label': aria[ button ],
+								'role': 'link',
+								'aria-current': btnClass === 'is-current' ? 'page' : null,
+								'data-dt-idx': button,
+								'tabindex': disabled ? -1 : settings.iTabIndex,
+								'class': 'pagination-link ' + btnClass,
+								'disabled': disabled
+							} )
+							.html( btnDisplay )
+						)
+						.appendTo( container );
+
+					settings.oApi._fnBindAction(
+						node, {action: button}, clickHandler
+					);
+				}
+			}
+		}
 	};
-};
 
-DataTable.ext.renderer.pagingContainer.bulma = function (settings, buttonEls) {
+	// IE9 throws an 'unknown error' if document.activeElement is used
+	// inside an iframe or frame. 
+	var activeEl;
+
+	try {
+		// Because this approach is destroying and recreating the paging
+		// elements, focus is lost on the select button which is bad for
+		// accessibility. So we want to restore focus once the draw has
+		// completed
+		activeEl = $(host).find(document.activeElement).data('dt-idx');
+	}
+	catch (e) {}
+
 	var nav = $('<nav class="pagination" role="navigation" aria-label="pagination"><ul class="pagination-list"></ul></nav>');
-	
-	nav.find('ul').append(buttonEls);
+	$(host).empty().append(nav);
 
-	return nav;
+	attach(nav.find('ul'), buttons);
+
+	if ( activeEl !== undefined ) {
+		$(host).find( '[data-dt-idx='+activeEl+']' ).trigger('focus');
+	}
 };
-
-DataTable.ext.renderer.layout.bulma = function ( settings, container, items ) {
-	var style = {};
-	var row = $( '<div/>', {
-			"class": 'columns is-multiline'
-		} )
-		.appendTo( container );
-
-	$.each( items, function (key, val) {
-		var klass;
-
-		if (val.table) {
-			klass = 'column is-full';
-		}
-		else if (key === 'start') {
-			klass = 'column is-narrow';
-		}
-		else if (key === 'end') {
-			klass = 'column is-narrow';
-			style.marginLeft = 'auto';
-		}
-		else {
-			klass = 'column is-full';
-			style.marginLeft = 'auto';
-			style.marginRight = 'auto';
-		}
-
-		$( '<div/>', {
-				id: val.id || null,
-				"class": klass+' '+(val.className || '')
-			} )
-			.css(style)
-			.append( val.contents )
-			.appendTo( row );
-	} );
-};
-
 
 // Javascript enhancements on table initialisation
 $(document).on( 'init.dt', function (e, ctx) {
@@ -106,11 +162,11 @@ $(document).on( 'init.dt', function (e, ctx) {
 	var api = new $.fn.dataTable.Api( ctx );
 
 	// Length menu drop down - needs to be wrapped with a div
-	$( 'div.dt-length select', api.table().container() ).wrap('<div class="select">');
+	$( 'div.dataTables_length select', api.table().container() ).wrap('<div class="select">');
 
 	// Filtering input
-	// $( 'div.dt-search.ui.input', api.table().container() ).removeClass('input').addClass('form');
-	// $( 'div.dt-search input', api.table().container() ).wrap( '<span class="ui input" />' );
+	// $( 'div.dataTables_filter.ui.input', api.table().container() ).removeClass('input').addClass('form');
+	// $( 'div.dataTables_filter input', api.table().container() ).wrap( '<span class="ui input" />' );
 } );
 
 
