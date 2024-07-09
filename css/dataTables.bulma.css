@@ -1,6 +1,9 @@
 @charset "UTF-8";
+/*! DataTables Bulma integration
+ * © SpryMedia Ltd - datatables.net/license
+ */
 :root {
-  --dt-row-selected: 0, 209, 178;
+  --dt-row-selected: 13, 110, 253;
   --dt-row-selected-text: 255, 255, 255;
   --dt-row-selected-link: 9, 10, 11;
   --dt-row-stripe: 0, 0, 0;
@@ -33,13 +36,19 @@ table.dataTable tr.dt-hasChild td.dt-control:before {
 }
 
 html.dark table.dataTable td.dt-control:before,
-:root[data-bs-theme=dark] table.dataTable td.dt-control:before {
+:root[data-bs-theme=dark] table.dataTable td.dt-control:before,
+:root[data-theme=dark] table.dataTable td.dt-control:before {
   border-left-color: rgba(255, 255, 255, 0.5);
 }
 html.dark table.dataTable tr.dt-hasChild td.dt-control:before,
-:root[data-bs-theme=dark] table.dataTable tr.dt-hasChild td.dt-control:before {
+:root[data-bs-theme=dark] table.dataTable tr.dt-hasChild td.dt-control:before,
+:root[data-theme=dark] table.dataTable tr.dt-hasChild td.dt-control:before {
   border-top-color: rgba(255, 255, 255, 0.5);
   border-left-color: transparent;
+}
+
+div.dt-scroll {
+  width: 100%;
 }
 
 div.dt-scroll-body thead tr,
@@ -181,7 +190,7 @@ div.dt-processing > div:last-child > div {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: rgb(0, 209, 178);
+  background: rgb(13, 110, 253);
   background: rgb(var(--dt-row-selected));
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
@@ -320,9 +329,14 @@ table.dataTable tbody td.dt-body-nowrap {
   white-space: nowrap;
 }
 
-/*! DataTables Bulma integration
- * ©2020 SpryMedia Ltd - datatables.net/license
- */
+:root {
+  --dt-row-selected: 0, 209, 178;
+  --dt-row-selected-text: 46, 51, 61;
+}
+:root[data-theme=dark] {
+  --dt-row-selected-text: 0, 31, 26;
+}
+
 table.dataTable {
   clear: both;
   margin-top: 6px !important;
@@ -337,7 +351,7 @@ table.dataTable > tbody > tr {
   background-color: transparent;
 }
 table.dataTable > tbody > tr.selected > * {
-  box-shadow: inset 0 0 0 9999px rgb(0, 209, 178);
+  box-shadow: inset 0 0 0 9999px rgb(13, 110, 253);
   box-shadow: inset 0 0 0 9999px rgb(var(--dt-row-selected));
   color: rgb(255, 255, 255);
   color: rgb(var(--dt-row-selected-text));
@@ -350,17 +364,48 @@ table.dataTable.is-striped > tbody > tr:nth-child(2n) > * {
   box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-stripe), 0.019);
 }
 table.dataTable.is-striped > tbody > tr:nth-child(2n).selected > * {
-  box-shadow: inset 0 0 0 9999px rgba(0, 209, 178, 0.919);
+  box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.919);
   box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-selected), 0.919);
 }
 table.dataTable.is-hoverable > tbody > tr:hover > * {
   box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.075);
 }
 table.dataTable.is-hoverable > tbody > tr.selected:hover > * {
-  box-shadow: inset 0 0 0 9999px rgba(0, 209, 178, 0.975);
+  box-shadow: inset 0 0 0 9999px rgba(13, 110, 253, 0.975);
   box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-selected), 0.975);
 }
 
+div.dt-container div.dt-layout-start > *:not(:last-child) {
+  margin-right: 1em;
+}
+div.dt-container div.dt-layout-end > *:not(:first-child) {
+  margin-left: 1em;
+}
+div.dt-container div.dt-layout-full {
+  width: 100%;
+}
+div.dt-container div.dt-layout-full > *:only-child {
+  margin-left: auto;
+  margin-right: auto;
+}
+div.dt-container div.dt-layout-table > div {
+  display: block !important;
+}
+
+@media screen and (max-width: 767px) {
+  div.dt-container div.dt-layout-start > *:not(:last-child) {
+    margin-right: 0;
+  }
+  div.dt-container div.dt-layout-end > *:not(:first-child) {
+    margin-left: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  div.dt-container > div.columns > div.column {
+    display: block !important;
+    text-align: center;
+  }
+}
 div.dt-container > div.columns {
   margin-bottom: 0 !important;
 }
@@ -377,9 +422,6 @@ div.dt-container div.dt-length select {
   display: inline-block;
   vertical-align: middle;
 }
-div.dt-container div.dt-search {
-  text-align: right;
-}
 div.dt-container div.dt-search label {
   font-weight: normal;
   white-space: nowrap;
@@ -389,9 +431,6 @@ div.dt-container div.dt-search input {
   margin-left: 0.5em;
   width: auto;
   vertical-align: middle;
-}
-div.dt-container div.dt-info {
-  padding-top: 0.5em;
 }
 div.dt-container div.dt-paging ul {
   justify-content: flex-end;
