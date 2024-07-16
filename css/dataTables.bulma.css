@@ -401,7 +401,7 @@ div.dt-container div.dt-layout-table > div {
   }
 }
 @media screen and (max-width: 767px) {
-  div.dt-container > div.columns > div.column {
+  div.dt-container > div.columns:not(.dt-layout-table) > div.column {
     display: block !important;
     text-align: center;
   }
