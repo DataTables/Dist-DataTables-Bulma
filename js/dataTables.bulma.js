@@ -75,6 +75,9 @@ $.extend( true, DataTable.ext.classes, {
 	},
 	processing: {
 		container: "dt-processing card"
+	},
+	paging: {
+		nav: 'pagination'
 	}
 } );
 
@@ -102,11 +105,7 @@ DataTable.ext.renderer.pagingButton.bulma = function (settings, buttonType, cont
 };
 
 DataTable.ext.renderer.pagingContainer.bulma = function (settings, buttonEls) {
-	var nav = $('<nav class="pagination" role="navigation" aria-label="pagination"><ul class="pagination-list"></ul></nav>');
-	
-	nav.find('ul').append(buttonEls);
-
-	return nav;
+	return $('<ul class="pagination-list"></ul>').append(buttonEls);
 };
 
 DataTable.ext.renderer.layout.bulma = function ( settings, container, items ) {
