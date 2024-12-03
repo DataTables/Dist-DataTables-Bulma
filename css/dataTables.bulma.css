@@ -448,7 +448,7 @@ div.dt-container div.dt-processing {
   padding: 1em 0;
 }
 div.dt-container.dt-empty-footer tbody > tr:last-child > * {
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid var(--bulma-border);
 }
 
 div.dt-scroll-head table.dataTable {
@@ -456,7 +456,7 @@ div.dt-scroll-head table.dataTable {
 }
 
 div.dt-container.dt-empty-footer div.dt-scroll-body {
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid var(--bulma-border);
 }
 
 div.dt-scroll-body table {
