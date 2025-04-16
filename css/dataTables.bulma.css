@@ -457,6 +457,9 @@ div.dt-container div.dt-layout-table > div {
     text-align: center;
   }
 }
+div.dt-container {
+  position: relative;
+}
 div.dt-container > div.columns {
   margin-bottom: 0 !important;
 }
