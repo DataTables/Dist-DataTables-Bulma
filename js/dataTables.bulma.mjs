@@ -113,7 +113,7 @@ DataTable.ext.renderer.layout.bulma = function ( settings, container, items ) {
 };
 
 
-// Javascript enhancements on table initialisation
+// JavaScript enhancements on table initialisation
 $(document).on( 'init.dt', function (e, ctx) {
 	if ( e.namespace !== 'dt' ) {
 		return;
