@@ -75,6 +75,9 @@ div.dt-scroll-body tfoot tr td div.dt-scroll-sizing {
   overflow: hidden !important;
 }
 
+/*! DataTables Bulma integration
+ * © SpryMedia Ltd - datatables.net/license
+ */
 table.dataTable thead > tr > th:active,
 table.dataTable thead > tr > td:active {
   outline: none;
@@ -196,6 +199,9 @@ div.dt-scroll-body > table.dataTable > thead > tr > td {
   outline: 2px solid rgba(255, 255, 255, 0.05);
 }
 
+/*! DataTables Bulma integration
+ * © SpryMedia Ltd - datatables.net/license
+ */
 div.dt-processing {
   position: absolute;
   top: 50%;
