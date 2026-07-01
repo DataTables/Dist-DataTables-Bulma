@@ -1,4 +1,4 @@
-/*! DataTables Bulma integration 3.0.0-beta.2
+/*! DataTables Bulma integration
  * © SpryMedia Ltd - datatables.net/license
  */
 
