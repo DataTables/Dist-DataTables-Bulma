@@ -450,11 +450,11 @@ table.dataTable tbody td.dt-body-nowrap {
 }
 
 :root {
-  --dt_background-selected: 0, 209, 178;
-  --dt_color-selected: 46, 51, 61;
+  --dt_background-selected: var(--bulma-table-row-active-background-color);
+  --dt_color-selected: var(--bulma-table-row-active-color);
 }
 :root[data-theme=dark] {
-  --dt_color-selected: 0, 31, 26;
+  --dt_color-selected: var(--bulma-table-row-active-color);
 }
 
 table.dataTable {
