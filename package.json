@@ -35,9 +35,10 @@
     "exports": {
         ".": {
             "types": "./types/dataTables.bulma.d.ts",
+            "style": "./css/dataTables.bulma.css",
             "import": "./js/dataTables.bulma.mjs",
-            "default": "./js/dataTables.bulma.mjs",
-            "require": "./js/dataTables.bulma.js"
+            "require": "./js/dataTables.bulma.js",
+            "default": "./js/dataTables.bulma.mjs"
         },
         "./js/*": "./js/*",
         "./css": {
